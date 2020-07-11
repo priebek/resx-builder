@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import { getLangLinksArray } from "./Api";
-import {
-  Button,
-  TextArea,
-  Segment,
-} from "@fluentui/react-northstar";
+import { Button, TextArea, Segment } from "@fluentui/react-northstar";
 
 export default function App(): React.ReactElement {
   const [text, setText] = useState("");
