@@ -9,7 +9,9 @@ export default function App(): React.ReactElement {
 
   const handleResultSelect = async () => {
     const s = await getLangLinksArray(input);
-    setText(s.map((x) => x.lang).toString());
+    // const newLocal = generateResx(input, s.find(x => x.lang === "da")?.text.toString() as string);
+    const newLocal = s.map((x) => x.lang + x.text).toString();
+    setText(newLocal);
   };
 
   return (
