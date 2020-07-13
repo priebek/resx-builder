@@ -12,7 +12,7 @@ const request = async (request: RequestInfo): Promise<any> => {
 export const getLangLinksArray = async (input: string): Promise<Model[]> => {
   if (input.length === 0) return [{ lang: "emtpy", text: "" }];
 
-  let result = await request(
+  const result = await request(
     `https://en.wikipedia.org//w/api.php?action=query&format=json&prop=langlinks&titles=${input}&lllimit=200`
   );
   try {
