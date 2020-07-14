@@ -14,6 +14,20 @@ export default function App(): React.ReactElement {
     setText(newLocal);
   };
 
+  const copyMessage = () => {
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = text;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+  }
+
   return (
     <>
       <Segment color="green" inverted>
@@ -43,6 +57,7 @@ export default function App(): React.ReactElement {
           value={text}
         />
       </Segment>
+      <Button onClick={() => copyMessage()} content="Copy to clipboard" ></Button>
     </>
   );
 }
