@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import "./App.css";
 import { getLangLinksArray } from "./Api";
-import { Button, TextArea, Segment } from "@fluentui/react-northstar";
+import {
+  Button,
+  TextArea,
+  Segment,
+  Dropdown,
+  DropdownItemProps,
+  ShorthandValue,
+} from "@fluentui/react-northstar";
 
 export default function App(): React.ReactElement {
   const [text, setText] = useState("");
@@ -15,18 +22,27 @@ export default function App(): React.ReactElement {
   };
 
   const copyMessage = () => {
-    const selBox = document.createElement('textarea');
-    selBox.style.position = 'fixed';
-    selBox.style.left = '0';
-    selBox.style.top = '0';
-    selBox.style.opacity = '0';
+    const selBox = document.createElement("textarea");
+    selBox.style.position = "fixed";
+    selBox.style.left = "0";
+    selBox.style.top = "0";
+    selBox.style.opacity = "0";
     selBox.value = text;
     document.body.appendChild(selBox);
     selBox.focus();
     selBox.select();
-    document.execCommand('copy');
+    document.execCommand("copy");
     document.body.removeChild(selBox);
-  }
+  };
+
+  const inputItems = ["ab", "ace", "ady", "af", "ak", "als", "am", "ar", "arc"];
+
+  const getA11ySelectionMessage = {
+    onAdd: (item: ShorthandValue<DropdownItemProps>) =>
+      `${item} has been selected.`,
+    onRemove: (item: ShorthandValue<DropdownItemProps>) =>
+      `${item} has been removed.`,
+  };
 
   return (
     <>
@@ -41,6 +57,14 @@ export default function App(): React.ReactElement {
       </Segment>
 
       <Segment>
+        <Dropdown
+          search
+          multiple
+          items={inputItems}
+          placeholder="Select language"
+          getA11ySelectionMessage={getA11ySelectionMessage}
+          noResultsMessage="We couldn't find any matches."
+        />
         <Button
           content="Generate resx file"
           primary
@@ -57,7 +81,10 @@ export default function App(): React.ReactElement {
           value={text}
         />
       </Segment>
-      <Button onClick={() => copyMessage()} content="Copy to clipboard" ></Button>
+      <Button
+        onClick={() => copyMessage()}
+        content="Copy to clipboard"
+      ></Button>
     </>
   );
 }
