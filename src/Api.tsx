@@ -9,21 +9,33 @@ const request = async (request: RequestInfo): Promise<any> => {
   return await response.json();
 };
 
-export const getLangLinksArray = async (input: string): Promise<Model[]> => {
+export const getLangLinksArray = async (
+  input: string,
+  language = ""
+): Promise<Model[]> => {
   if (input.length === 0) return [{ lang: "emtpy", text: "" }];
+  let result;
+  if (language.length === 0) {
+    result = await request(
+      `https://en.wikipedia.org//w/api.php?action=query&format=json&prop=langlinks&indexpageids=1&titles=${input}&lllimit=200`
+    );
+  } else {
+    result = await request(
+      `https://en.wikipedia.org//w/api.php?action=query&format=json&prop=langlinks&indexpageids=1&titles=${input}&lllang=${language}`
+    );
+  }
 
-  const result = await request(
-    `https://en.wikipedia.org//w/api.php?action=query&format=json&prop=langlinks&titles=${input}&lllimit=200`
-  );
   try {
-    const re = /\*/gi;
+    console.log("result: " + JSON.stringify(result));
 
-     console.log(JSON.stringify(result));
-    const test = JSON.stringify(result).replace(re, "text");
+    const id = result.query.pageids;
+    console.log("id" + id);
+
+    const re = /\*/gi;
+    const test = JSON.parse(JSON.stringify(result).replace(re, "text"));
     console.log(JSON.stringify(test));
 
-    const id = (JSON.parse(test)).continue.llcontinue.split("|", 1);
-    const langlinks = result.query.pages[id].langlinks;
+    const langlinks = test.query.pages[id].langlinks;
     return langlinks;
   } catch (error) {
     return [{ lang: error, text: "" }];

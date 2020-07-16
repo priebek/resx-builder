@@ -5,20 +5,19 @@ import {
   Button,
   TextArea,
   Segment,
-  Dropdown,
-  DropdownItemProps,
-  ShorthandValue,
+  Input,
+  FlagIcon,
 } from "@fluentui/react-northstar";
 
 export default function App(): React.ReactElement {
-  const [text, setText] = useState("");
-  const [input, setInput] = useState("");
+  const [output, setOutput] = useState("");
+  const [input, setInput] = useState("dog");
+  const [language, setLanguage] = useState("es");
 
   const handleResultSelect = async () => {
-    const s = await getLangLinksArray(input);
-    // const newLocal = generateResx(input, s.find(x => x.lang === "da")?.text.toString() as string);
-    const newLocal = s.map((x) => x.lang + x.text).toString();
-    setText(newLocal);
+    const s = await getLangLinksArray(input, language);
+    const newLocal = s.map((x) => x.text).toString();
+    setOutput(newLocal);
   };
 
   const copyMessage = () => {
@@ -27,21 +26,12 @@ export default function App(): React.ReactElement {
     selBox.style.left = "0";
     selBox.style.top = "0";
     selBox.style.opacity = "0";
-    selBox.value = text;
+    selBox.value = output;
     document.body.appendChild(selBox);
     selBox.focus();
     selBox.select();
     document.execCommand("copy");
     document.body.removeChild(selBox);
-  };
-
-  const inputItems = ["ab", "ace", "ady", "af", "ak", "als", "am", "ar", "arc"];
-
-  const getA11ySelectionMessage = {
-    onAdd: (item: ShorthandValue<DropdownItemProps>) =>
-      `${item} has been selected.`,
-    onRemove: (item: ShorthandValue<DropdownItemProps>) =>
-      `${item} has been removed.`,
   };
 
   return (
@@ -53,18 +43,20 @@ export default function App(): React.ReactElement {
           placeholder="Type like 'dog'"
           style={{ height: "200px" }}
           onChange={(e, data) => setInput(data?.value as string)}
+          value={input}
+        />
+        <Input
+          fluid
+          icon={<FlagIcon />}
+          onChange={(e, data) => {
+            setLanguage(data?.value as string);
+          }}
+          clearable
+          placeholder="Set language: es"
         />
       </Segment>
 
       <Segment>
-        <Dropdown
-          search
-          multiple
-          items={inputItems}
-          placeholder="Select language"
-          getA11ySelectionMessage={getA11ySelectionMessage}
-          noResultsMessage="We couldn't find any matches."
-        />
         <Button
           content="Generate resx file"
           primary
@@ -78,7 +70,7 @@ export default function App(): React.ReactElement {
           disabled
           resize="vertical"
           style={{ height: "200px" }}
-          value={text}
+          value={output}
         />
       </Segment>
       <Button
