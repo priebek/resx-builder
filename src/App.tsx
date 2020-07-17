@@ -8,6 +8,7 @@ import {
   Input,
   FlagIcon,
 } from "@fluentui/react-northstar";
+import getResxStructure from "./resx";
 
 export default function App(): React.ReactElement {
   const [output, setOutput] = useState("");
@@ -18,15 +19,20 @@ export default function App(): React.ReactElement {
     const s = await getLangLinksArray(input, language);
     const newLocal = s.map((x) => x.text).toString();
     setOutput(newLocal);
+
+    console.log(newLocal);
+    copyMessage(newLocal);
+
+    return;
   };
 
-  const copyMessage = () => {
+  const copyMessage = (txt: string) => {
     const selBox = document.createElement("textarea");
     selBox.style.position = "fixed";
     selBox.style.left = "0";
     selBox.style.top = "0";
     selBox.style.opacity = "0";
-    selBox.value = output;
+    selBox.value = txt;
     document.body.appendChild(selBox);
     selBox.focus();
     selBox.select();
@@ -60,7 +66,10 @@ export default function App(): React.ReactElement {
         <Button
           content="Generate resx file"
           primary
-          onClick={handleResultSelect}
+          onClick={() => {
+            handleResultSelect().then(() => {
+            });
+          }}
         />
       </Segment>
 
@@ -74,7 +83,7 @@ export default function App(): React.ReactElement {
         />
       </Segment>
       <Button
-        onClick={() => copyMessage()}
+        onClick={() => getResxStructure()}
         content="Copy to clipboard"
       ></Button>
     </>
