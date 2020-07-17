@@ -66,10 +66,7 @@ export default function App(): React.ReactElement {
         <Button
           content="Generate resx file"
           primary
-          onClick={() => {
-            handleResultSelect().then(() => {
-            });
-          }}
+          onClick={handleResultSelect}
         />
       </Segment>
 
