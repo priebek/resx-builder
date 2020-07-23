@@ -1,4 +1,3 @@
-import { XML } from "sxml";
 import { Model } from "../model/models";
 
 const generateResx = (model: Model[]): string => {
@@ -21,9 +20,7 @@ export default function getResxStructure(model: Model[]): string {
   const data = generateResx(model);
   console.log(data);
 
-  const xml = new XML(template(data));
-
-  return xml.toString();
+  return template(data);
 }
 
 const template = (input: string): string => {

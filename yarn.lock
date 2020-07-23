@@ -10755,13 +10755,6 @@ svgo@^1.0.0, svgo@^1.2.2:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-sxml@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/sxml/-/sxml-1.0.4.tgz#cdb0f45597f7b95ec9aa3a9ced103f9b15508696"
-  integrity sha512-OH+esgfwtbLUbsTLCE1bkuOfxIDs5r+nuNF4TMVGBJv0dZxMvU1IaZ9yiUwncX3G7ARbdugySlWsFydiL5nPzA==
-  dependencies:
-    tstl ">= 2.3.0"
-
 symbol-tree@^3.2.2:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
@@ -10979,11 +10972,6 @@ tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.13.0.tgz#c881e13cc7015894ed914862d276436fa9a47043"
   integrity sha512-i/6DQjL8Xf3be4K/E6Wgpekn5Qasl1usyw++dAA35Ue5orEn65VIxOA+YvNNl9HV3qv70T7CNwjODHZrLwvd1Q==
-
-"tstl@>= 2.3.0":
-  version "2.4.11"
-  resolved "https://registry.yarnpkg.com/tstl/-/tstl-2.4.11.tgz#d7b478f8af5d8051ea7ea54f4420de4df900911e"
-  integrity sha512-6zv4IQC/mD6F4EuTeE678+bESVdkDuDoSz4BEUanaotNPm90jzNyWl3cONQjkOdFSTY8vJAnyMYS6q4QhQf2rQ==
 
 tsutils@^3.17.1:
   version "3.17.1"
