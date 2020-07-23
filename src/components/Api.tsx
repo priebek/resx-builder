@@ -1,7 +1,4 @@
-interface Model {
-  lang: string;
-  text: string;
-}
+import { Model } from "../model/models";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const request = async (request: RequestInfo): Promise<any> => {
@@ -13,7 +10,7 @@ export const getLangLinksArray = async (
   input: string,
   language = ""
 ): Promise<Model[]> => {
-  if (input.length === 0) return [{ lang: "emtpy", text: "" }];
+  if (input.length === 0) return [{ lang: "emtpy", text: "", name: input }];
   let result;
   if (language.length === 0) {
     result = await request(
@@ -38,6 +35,6 @@ export const getLangLinksArray = async (
     const langlinks = test.query.pages[id].langlinks;
     return langlinks;
   } catch (error) {
-    return [{ lang: error, text: "" }];
+    return [{ lang: error, text: "", name: input }];
   }
 };

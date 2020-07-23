@@ -16,14 +16,10 @@ export default function App(): React.ReactElement {
   const [language, setLanguage] = useState("es");
 
   const handleResultSelect = async () => {
-    const s = await getLangLinksArray(input, language);
-    const newLocal = s.map((x) => x.text).toString();
-    setOutput(newLocal);
-
-    console.log(newLocal);
-    copyMessage(newLocal);
-
-    return;
+    const modelArray = await getLangLinksArray(input, language);
+    const outputResult = getResxStructure(modelArray);
+    setOutput(outputResult);
+    copyMessage(outputResult);
   };
 
   const copyMessage = (txt: string) => {
@@ -73,16 +69,15 @@ export default function App(): React.ReactElement {
       <Segment>
         <TextArea
           fluid
-          disabled
           resize="vertical"
           style={{ height: "200px" }}
           value={output}
         />
       </Segment>
-      <Button
-        onClick={() => getResxStructure()}
+      {/* <Button
+        onClick={() => getResxStructure(data)}
         content="Copy to clipboard"
-      ></Button>
+      ></Button> */}
     </>
   );
 }

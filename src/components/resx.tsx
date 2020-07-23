@@ -1,28 +1,27 @@
-import { XML, XMLList } from "sxml";
+import { XML } from "sxml";
+import { Model } from "../model/models";
 
-const generateResx = (name: string, translate: string): string => {
-  let build = '<?xml version="1.0" encoding="utf-8"?>\n';
-  build += "<root>\n";
-  build += `<data name="${name}" xml:space="preserve">\n`;
-  build += `<value>${translate}</value>\n`;
-  build += "</data>\n";
-  build += "</root>\n";
-  return build;
+const generateResx = (model: Model[]): string => {
+  let data = "";
+
+  model.forEach((x) => {
+    console.log(JSON.stringify(model));
+
+    data = `<data name="${x.lang}" xml:space="preserve">\n`;
+    data += `<value>${x.text}</value>\n`;
+    data += "</data>\n";
+  });
+
+  return data;
 };
 
-export default function getResxStructure(): string {
-  const xml = new XML(template(generateResx("dog", "Perro")));
+export default function getResxStructure(model: Model[]): string {
+  if (model.length === 0) return "";
 
-  const xmlList = xml.get("data");
-  console.log("#" + xmlList.size());
-  console.log(xmlList.at(0).getProperty("name"));
+  const data = generateResx(model);
+  console.log(data);
 
-  const members: XMLList = xml.get("data").at(0).get("value");
-
-  members.at(0).setValue("changed!");
-
-  console.log(members.at(0).getValue());
-  console.log(xml.toString());
+  const xml = new XML(template(data));
 
   return xml.toString();
 }
@@ -88,9 +87,6 @@ const template = (input: string): string => {
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="myName" xml:space="preserve">
-    <value>myValue</value>
-  </data>
   ${input}
 </root>
 `;
