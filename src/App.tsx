@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import { getLangLinksArray } from "./Api";
+import { getLangLinksArray } from "./components/Api";
 import {
   Button,
   TextArea,
@@ -8,7 +8,7 @@ import {
   Input,
   FlagIcon,
 } from "@fluentui/react-northstar";
-import getResxStructure from "./resx";
+import getResxStructure from "./components/resx";
 
 export default function App(): React.ReactElement {
   const [output, setOutput] = useState("");
