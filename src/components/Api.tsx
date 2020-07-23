@@ -6,11 +6,12 @@ const request = async (request: RequestInfo): Promise<any> => {
   return await response.json();
 };
 
-export const getLangLinksArray = async (
+export const getTranslate = async (
   input: string,
   language = ""
 ): Promise<Model[]> => {
-  if (input.length === 0) return [{ lang: "emtpy", text: "", name: input }];
+  if (input.length === 0)
+    return [{ lang: "error", text: "error", name: "error" }];
   let result;
   if (language.length === 0) {
     result = await request(
@@ -23,18 +24,13 @@ export const getLangLinksArray = async (
   }
 
   try {
-    console.log("result: " + JSON.stringify(result));
-
     const id = result.query.pageids;
-    console.log("id" + id);
-
     const re = /\*/gi;
     const test = JSON.parse(JSON.stringify(result).replace(re, "text"));
-    console.log(JSON.stringify(test));
-
     const langlinks = test.query.pages[id].langlinks;
-    return langlinks;
+
+    return [{ lang: langlinks[0].lang, name: input, text: langlinks[0].text }];
   } catch (error) {
-    return [{ lang: error, text: "", name: input }];
+    return [{ lang: "error", text: "error", name: "error" }];
   }
 };

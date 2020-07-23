@@ -6,9 +6,9 @@ const generateResx = (model: Model[]): string => {
   model.forEach((x) => {
     console.log(JSON.stringify(model));
 
-    data = `<data name="${x.lang}" xml:space="preserve">\n`;
+    data = `<data name="${x.name}" xml:space="preserve">\n`;
     data += `<value>${x.text}</value>\n`;
-    data += "</data>\n";
+    data += "</data>";
   });
 
   return data;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import { getLangLinksArray } from "./components/Api";
+import { getTranslate } from "./components/Api";
 import {
   Button,
   TextArea,
@@ -16,7 +16,7 @@ export default function App(): React.ReactElement {
   const [language, setLanguage] = useState("es");
 
   const handleResultSelect = async () => {
-    const modelArray = await getLangLinksArray(input, language);
+    const modelArray = await getTranslate(input, language);
     const outputResult = getResxStructure(modelArray);
     setOutput(outputResult);
     copyMessage(outputResult);
@@ -74,10 +74,6 @@ export default function App(): React.ReactElement {
           value={output}
         />
       </Segment>
-      {/* <Button
-        onClick={() => getResxStructure(data)}
-        content="Copy to clipboard"
-      ></Button> */}
     </>
   );
 }
