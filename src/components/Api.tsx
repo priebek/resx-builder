@@ -12,24 +12,30 @@ export const getTranslate = async (
 ): Promise<Model[]> => {
   if (input.length === 0)
     return [{ lang: "error", text: "error", name: "error" }];
-  let result;
+  let apiResult;
   if (language.length === 0) {
-    result = await request(
+    apiResult = await request(
       `https://en.wikipedia.org//w/api.php?action=query&format=json&prop=langlinks&indexpageids=1&titles=${input}&lllimit=200`
     );
   } else {
-    result = await request(
+    apiResult = await request(
       `https://en.wikipedia.org//w/api.php?action=query&format=json&prop=langlinks&indexpageids=1&titles=${input}&lllang=${language}`
     );
   }
 
   try {
-    const id = result.query.pageids;
+    const id = apiResult.query.pageids;
     const re = /\*/gi;
-    const test = JSON.parse(JSON.stringify(result).replace(re, "text"));
+    const test = JSON.parse(JSON.stringify(apiResult).replace(re, "text"));
     const langlinks = test.query.pages[id].langlinks;
 
-    return [{ lang: langlinks[0].lang, name: input, text: langlinks[0].text }];
+    const models: Model[] = [];
+
+    langlinks.forEach((x: Model) => {
+      models.push({ lang: x.lang, name: input, text: x.text });
+    });
+
+    return models;
   } catch (error) {
     return [{ lang: "error", text: "error", name: "error" }];
   }
