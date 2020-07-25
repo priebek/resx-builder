@@ -9,6 +9,7 @@ import {
   FlagIcon,
 } from "@fluentui/react-northstar";
 import getResxStructure from "./components/resx";
+import downloadTextAsFile from "./components/download";
 
 export default function App(): React.ReactElement {
   const [output, setOutput] = useState("");
@@ -72,6 +73,11 @@ export default function App(): React.ReactElement {
           resize="vertical"
           style={{ height: "200px" }}
           value={output}
+        />
+        <Button
+          content="Download resx file"
+          primary
+          onClick={() => downloadTextAsFile(output)}
         />
       </Segment>
     </>
