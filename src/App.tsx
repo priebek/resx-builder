@@ -22,7 +22,7 @@ export default function App(): React.ReactElement {
   const handleResultSelect = async () => {
     let outputResult = "";
 
-    let y: Model[] = [];
+    const y: Model[] = [];
 
     // Split for space, tab, newline and comma
     const inputArray = input.split(/[\s,]+/);
