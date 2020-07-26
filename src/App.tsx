@@ -10,15 +10,33 @@ import {
 } from "@fluentui/react-northstar";
 import getResxStructure from "./components/resx";
 import downloadTextAsFile from "./components/download";
+import { Model } from "./model/models";
 
 export default function App(): React.ReactElement {
   const [output, setOutput] = useState("");
-  const [input, setInput] = useState("dog");
+  const [input, setInput] = useState("dog sheep\ncat");
   const [language, setLanguage] = useState("es");
+  // const models: Model[] = [{ lang: "", name: "", text: "" }];
+  // const [my, setMy] = useState(models);
 
   const handleResultSelect = async () => {
-    const modelArray = await getTranslate(input, language);
-    const outputResult = getResxStructure(modelArray);
+    let outputResult = "";
+
+    let y: Model[] = [];
+
+    // Split for space, tab, newline and comma
+    const inputArray = input.split(/[\s,]+/);
+    inputArray.forEach(async (x) => {
+      console.log(x);
+      const newLocal = await getTranslate(x, language);
+
+      // setMy((my) => [...my, newLocal]);
+      y.concat(newLocal);
+    });
+
+    //TODO use each translated language
+    outputResult += getResxStructure(await getTranslate(input, language));
+
     setOutput(outputResult);
     copyMessage(outputResult);
   };
