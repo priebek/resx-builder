@@ -27,7 +27,6 @@ export default function App(): React.ReactElement {
 
     new Promise((resolve) => {
       inputArray.forEach(async (x) => {
-        console.log(x);
         const newLocal = await getTranslate(x, language);
         y.push(...newLocal);
 
