@@ -4,11 +4,9 @@ const generateResx = (model: Model[]): string => {
   let data = "";
 
   model.forEach((x) => {
-    console.log(JSON.stringify(model));
-
-    data = `<data name="${x.name}" xml:space="preserve">\n`;
+    data += `<data name="${x.name}" xml:space="preserve">\n`;
     data += `<value>${x.text}</value>\n`;
-    data += "</data>";
+    data += "</data>\n";
   });
 
   return data;
@@ -16,10 +14,7 @@ const generateResx = (model: Model[]): string => {
 
 export default function getResxStructure(model: Model[]): string {
   if (model.length === 0) return "";
-
   const data = generateResx(model);
-  console.log(data);
-
   return template(data);
 }
 
@@ -84,7 +79,6 @@ const template = (input: string): string => {
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  ${input}
-</root>
+  ${input}</root>
 `;
 };

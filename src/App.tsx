@@ -16,8 +16,6 @@ export default function App(): React.ReactElement {
   const [output, setOutput] = useState("");
   const [input, setInput] = useState("dog sheep\ncat");
   const [language, setLanguage] = useState("es");
-  // const models: Model[] = [{ lang: "", name: "", text: "" }];
-  // const [my, setMy] = useState(models);
 
   const handleResultSelect = async () => {
     let outputResult = "";
@@ -26,19 +24,20 @@ export default function App(): React.ReactElement {
 
     // Split for space, tab, newline and comma
     const inputArray = input.split(/[\s,]+/);
-    inputArray.forEach(async (x) => {
-      console.log(x);
-      const newLocal = await getTranslate(x, language);
 
-      // setMy((my) => [...my, newLocal]);
-      y.concat(newLocal);
+    new Promise((resolve) => {
+      inputArray.forEach(async (x) => {
+        console.log(x);
+        const newLocal = await getTranslate(x, language);
+        y.push(...newLocal);
+
+        if (y.length === inputArray.length) resolve();
+      });
+    }).then(async () => {
+      outputResult += getResxStructure(y);
+      setOutput(outputResult);
+      copyMessage(outputResult);
     });
-
-    //TODO use each translated language
-    outputResult += getResxStructure(await getTranslate(input, language));
-
-    setOutput(outputResult);
-    copyMessage(outputResult);
   };
 
   const copyMessage = (txt: string) => {
