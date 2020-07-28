@@ -30,6 +30,7 @@ jobs:
     - name: Build
       run: |
         yarn build --if-present
+        pwd
         cd build
         pwd
         ls -la
@@ -40,4 +41,4 @@ jobs:
         ftp-server: ${{ secrets.FTP_SERVER }}
         ftp-username: ${{ secrets.FTP_USERNAME }}
         ftp-password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./build/
+        local-dir: build/
