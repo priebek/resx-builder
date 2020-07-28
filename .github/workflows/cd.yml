@@ -28,7 +28,9 @@ jobs:
       run: yarn install
 
     - name: Build
-      run: yarn build --if-present
+      run: |
+        yarn build --if-present
+        ls -la
    
     - name: FTP Deploy
       uses: SamKirkland/FTP-Deploy-Action@3.1.1
@@ -36,3 +38,4 @@ jobs:
         ftp-server: ${{ secrets.FTP_SERVER }}
         ftp-username: ${{ secrets.FTP_USERNAME }}
         ftp-password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: build
