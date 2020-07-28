@@ -31,6 +31,7 @@ jobs:
       run: |
         yarn build --if-present
         cd build
+        pwd
         ls -la
    
     - name: FTP Deploy
@@ -39,3 +40,4 @@ jobs:
         ftp-server: ${{ secrets.FTP_SERVER }}
         ftp-username: ${{ secrets.FTP_USERNAME }}
         ftp-password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./build/
