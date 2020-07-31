@@ -15,11 +15,11 @@ export const getTranslate = async (
   let apiResult;
   if (language.length === 0) {
     apiResult = await request(
-      `https://en.wikipedia.org//w/api.php?action=query&format=json&prop=langlinks&indexpageids=1&titles=${input}&lllimit=200`
+      `https://en.wikipedia.org//w/api.php?action=query&format=json&prop=langlinks&indexpageids=1&titles=${input}&lllimit=200&origin=*`
     );
   } else {
     apiResult = await request(
-      `https://en.wikipedia.org//w/api.php?action=query&format=json&prop=langlinks&indexpageids=1&titles=${input}&lllang=${language}`
+      `https://en.wikipedia.org//w/api.php?action=query&format=json&prop=langlinks&indexpageids=1&titles=${input}&lllang=${language}&origin=*`
     );
   }
 
