@@ -7,6 +7,8 @@ import {
   Segment,
   Input,
   FlagIcon,
+  Header,
+  Text,
 } from "@fluentui/react-northstar";
 import getResxStructure from "./components/resx";
 import downloadTextAsFile from "./components/download";
@@ -14,7 +16,7 @@ import { Model } from "./model/models";
 
 export default function App(): React.ReactElement {
   const [output, setOutput] = useState("");
-  const [input, setInput] = useState("dog sheep\ncat");
+  const [input, setInput] = useState("");
   const [language, setLanguage] = useState("es");
 
   const handleResultSelect = async () => {
@@ -55,15 +57,22 @@ export default function App(): React.ReactElement {
 
   return (
     <>
+      <Header
+        content="RESX Builder"
+        align="center"
+        description="Translate and build resx file"
+      />
       <Segment color="green" inverted>
+        <Text content="List words to translate" />
         <TextArea
           fluid
           resize="vertical"
-          placeholder="Type like 'dog'"
+          placeholder="dog sheep cat"
           style={{ height: "200px" }}
           onChange={(e, data) => setInput(data?.value as string)}
           value={input}
         />
+        <Text content="Translate to this language" />
         <Input
           fluid
           icon={<FlagIcon />}
@@ -71,7 +80,7 @@ export default function App(): React.ReactElement {
             setLanguage(data?.value as string);
           }}
           clearable
-          placeholder="Set language: es"
+          placeholder="es"
         />
       </Segment>
 
